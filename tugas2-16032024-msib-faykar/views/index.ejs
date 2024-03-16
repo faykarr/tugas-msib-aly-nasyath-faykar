@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List MVC JS Structure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="shortcut icon" href="img/favicon.svg" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="text-center mt-5"><i class="bi bi-check2-circle me-2"></i>Simple Todo List</h1>
+                <!-- App Description -->
+                <p class="text-center fs-6 fw-semibold">This is a simple todo list app using Node.js, Express.js, EJS
+                    Template Engine, and MySQL. This project is for mini project assignment of MVC subject in MSIB 6 -
+                    Mentor Rizky Aly</p>
+                <form id="todo-form" action="/addTodo" method="post" class="shadow">
+                    <div class="input-group mb-3">
+                        <input type="text" autofocus class="form-control" id="todo-input" placeholder="Add a new todo"
+                            name="events" required>
+                        <select class="form-select" id="todo-status" name="status">
+                            <option value="Todo">Todo</option>
+                            <option value="Work In Progress">Work In Progress
+                            </option>
+                            <option value="Finished">Finished</option>
+                        </select>
+                        <button class="btn btn-primary fw-semibold" type="submit"><i
+                            class="bi bi-plus-lg me-1"></i>Add</button>
+                    </div>
+                </form>
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h4 class="text-center mb-0">Todo List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="border border-2 border-light-subtle rounded">
+                            <table class="table table-responsive table-borderless text-center mb-0 rounded">
+                                <tbody>
+                                    <% todos.forEach(todo=> { %>
+                                        <tr>
+                                            <th scope="row">
+                                                ID : <%= todo.id %>
+                                            </th>
+                                            <td>
+                                                <%= todo.events %>
+                                            </td>
+                                            <td>
+                                                <% if (todo.status=="Todo" ) { %>
+                                                    <span class="badge text-bg-primary">
+                                                        <i class="bi bi-list-task me-1"></i>
+                                                        <%= todo.status %>
+                                                    </span>
+                                                    <% } %>
+                                                        <% if (todo.status=="Work In Progress" ) { %>
+                                                            <span class="badge text-bg-warning">
+                                                                <i class="bi bi-bootstrap-reboot me-1"></i>
+                                                                <%= todo.status %>
+                                                            </span>
+                                                            <% } %>
+                                                                <% if (todo.status=="Finished" ) { %>
+                                                                    <span class="badge text-bg-success">
+                                                                        <i class="bi bi-check2-circle me-1"></i>
+                                                                        <%= todo.status %>
+                                                                    </span>
+                                                                    <% } %>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+
+                                                    <a href="javascript:void(0)" class="btn btn-success btn-sm editBtn"
+                                                        data-bs-toggle="modal" data-bs-target="#editModal"
+                                                        data-id="<%= todo.id %>"><i
+                                                            class="bi bi-pencil-square me-1"></i>Edit</a>
+
+                                                    <a href="/delete/<%= todo.id %>"
+                                                        onclick="return confirm('Are you sure want to delete this data?')"
+                                                        class="btn btn-danger btn-sm"><i
+                                                            class="bi bi-trash me-1"></i>Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer pb-0">
+                        <!-- Copyright made with 💖 by faykarr -->
+                        <p class="text-center fw-semibold mb-2">Made with 💖 by <a href="https://github.com/faykarr"
+                                target="_blank">faykarr</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <%- include('./modalEdit.ejs') %>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <script src="js/script.js"></script>
+</body>
+
+</html>
